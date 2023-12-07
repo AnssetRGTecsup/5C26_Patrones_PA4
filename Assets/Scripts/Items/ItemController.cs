@@ -18,25 +18,25 @@ public class ItemController : MonoBehaviour
 
             if (this.gameObject.tag == "MunicionBase")
             {
-                tmp = balas.doubleLinkedList.GetNodeValueAtPosition(0);
+                tmp = balas.doubleLinkedList[0];
                 tmp.currentMunicion = tmp.municion;
                 DestruirMunicion();
             }
             if (this.gameObject.tag == "Municion1")
             {
-                tmp = balas.doubleLinkedList.GetNodeValueAtPosition(1);
+                tmp = balas.doubleLinkedList[1];
                 tmp.currentMunicion = tmp.municion;
                 DestruirMunicion();
             }
             if (this.gameObject.tag == "Municion2")
             {
-                tmp = balas.doubleLinkedList.GetNodeValueAtPosition(2);
+                tmp = balas.doubleLinkedList[2];
                 tmp.currentMunicion = tmp.municion;
                 DestruirMunicion();
             }
             if (this.gameObject.tag == "Municion3")
             {
-                tmp = balas.doubleLinkedList.GetNodeValueAtPosition(3);
+                tmp = balas.doubleLinkedList[3];
                 tmp.currentMunicion = tmp.municion;
                 DestruirMunicion();
             }
