@@ -13,19 +13,16 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        if (instancia == null)
+        if(instancia != null && instancia != this)
         {
-            instancia = this;
+            Destroy(this);
         }
-        else if (instancia != this)
-        {
-            Destroy(gameObject);
-        }
+
+        instancia = this;
+
+        DontDestroyOnLoad(this.gameObject);
     }
-    void Start()
-    {
-        CargarVolumen();
-    }
+
     public void SonidoGanaste()
     {
         audioSourceSFX.PlayOneShot(audioClips[0]);
@@ -53,12 +50,5 @@ public class AudioManager : MonoBehaviour
     public void SonidoVida()
     {
         audioSourceSFX.PlayOneShot(audioClips[6]);
-    }
-    public void CargarVolumen()
-    {
-        float volumenMusica = PlayerPrefs.GetFloat("volumenMusica", 1f);
-        float volumenSFX = PlayerPrefs.GetFloat("volumenSFX", 1f);
-        mixer.SetFloat("VolumenMusica", Mathf.Log10(volumenMusica) * 30);
-        mixer.SetFloat("VolumenSFX", Mathf.Log10(volumenSFX) * 30);    
     }
 }
