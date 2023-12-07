@@ -7,6 +7,7 @@ public class GuardarRecord : MonoBehaviour
 {
     public TextMeshProUGUI[] score;
     public TimerController timer;
+    public LevelScore levelScore;
     private float puntos;
 
     private float pointRecord;
@@ -14,6 +15,7 @@ public class GuardarRecord : MonoBehaviour
 
     void Start()
     {
+        //levelScore.Score
         pointRecord = PlayerPrefs.GetFloat("RecordPuntos", 0f);
         tiempoRecord = PlayerPrefs.GetString("RecordTiempo", "--:--");
     }

@@ -5,6 +5,7 @@ using TMPro;
 
 public class TimerController : MonoBehaviour
 {
+    public LevelScore levelScore;
     public float timeRemaining = 0;
     public bool timerIsRunning = false;
     public TextMeshProUGUI timeText;

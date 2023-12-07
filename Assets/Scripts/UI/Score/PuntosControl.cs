@@ -5,6 +5,7 @@ using TMPro;
 
 public class PuntosControl : MonoBehaviour
 {
+    public LevelScore levelScore;
     public static PuntosControl instancia;
     public TextMeshProUGUI puntosText;
     public float puntos;

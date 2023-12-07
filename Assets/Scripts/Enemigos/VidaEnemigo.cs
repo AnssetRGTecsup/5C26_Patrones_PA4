@@ -51,6 +51,7 @@ public class VidaEnemigo : MonoBehaviour
     }
     void EnemyDead()
     {
+        Evento.BunnyDead("Mori");
         PuntosControl.instancia.puntos += puntos; // 2; 1 comparacion y 1 suma 
         SpawItems.instancia.RandomSpawn(gameObject); //8 asignacion 
         AudioManager.instancia.SonidoExplosion(); // 1
