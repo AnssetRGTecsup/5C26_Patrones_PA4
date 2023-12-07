@@ -12,6 +12,7 @@ public class AdministradorBalas : MonoBehaviour
     [Header("DoubleLinkedList")]
     public Bullet[] bulletArray;
     public DoubleLinkedList<Bullet> doubleLinkedList;
+    //public List<Bullet> doubleLinkedList;
 
     public Bullet currentBullet;
 
@@ -44,6 +45,7 @@ public class AdministradorBalas : MonoBehaviour
     void Start()
     {
         doubleLinkedList.AddNodeAtStart(bulletArray[0]);
+        //doubleLinkedList.Add(bulletArray[0]);
 
         for (int i = 1; i < bulletArray.Length; ++i)
         {

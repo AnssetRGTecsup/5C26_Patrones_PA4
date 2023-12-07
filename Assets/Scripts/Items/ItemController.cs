@@ -42,7 +42,7 @@ public class ItemController : MonoBehaviour
             }
             if (this.gameObject.tag == "Vida")
             {
-                collision.gameObject.GetComponent<VidaPlayer>().Vida += 1;
+                collision.gameObject.GetComponent<VidaPlayer>().vidaPlayer.vida += 1;
                 AudioManager.instancia.SonidoVida();
                 Destroy(gameObject);
             }

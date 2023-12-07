@@ -5,18 +5,10 @@ using UnityEngine.UI;
 
 public class VidaPlayer : MonoBehaviour
 {
-    public GameObject boomPrefab;
+    //public GameObject boomPrefab;
 
-    private float vida = 3;
-    public float Vida
-    {
-        get { return vida; }
-        set
-        {
-            value = Mathf.Clamp(value, 0, 3);
-            vida = value;
-        }
-    }
+    public PlayerSO vidaPlayer;
+  
 
     public Image[] vidas;
 
@@ -31,7 +23,7 @@ public class VidaPlayer : MonoBehaviour
 
     void Start()
     {
-        vida = 3;
+        vidaPlayer.vida = 3;
         deadPlaver = false;
         VidaControl();
 
@@ -46,14 +38,14 @@ public class VidaPlayer : MonoBehaviour
     }
     void VidaControl()
     {
-        if (vida == 3)
+        if (vidaPlayer.vida == 3)
         {
             for (int i = 0; i < vidas.Length; i++)
             {
                 vidas[i].sprite = corazon;
             }
         }
-        if (vida == 2)
+        if (vidaPlayer.vida == 2)
         {
             vidas[0].sprite = dead;
 
@@ -62,7 +54,7 @@ public class VidaPlayer : MonoBehaviour
                 vidas[i].sprite = corazon;
             }
         }
-        if (vida == 1)
+        if (vidaPlayer.vida == 1)
         {
             for (int i = 0; i < vidas.Length - 1; i++)
             {
@@ -71,7 +63,7 @@ public class VidaPlayer : MonoBehaviour
 
             vidas[2].sprite = corazon;
         }
-        if (vida == 0)
+        if (vidaPlayer.vida == 0)
         {
             for (int i = 0; i < vidas.Length; i++)
             {
@@ -88,7 +80,7 @@ public class VidaPlayer : MonoBehaviour
     }
     public void TomarDaño()
     {
-        vida -= 1;
+        vidaPlayer.vida -= 1;
         AudioManager.instancia.SonidoDolor();
         animator.SetTrigger("Daño");
     }
