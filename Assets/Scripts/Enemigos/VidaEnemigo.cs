@@ -8,15 +8,8 @@ public class VidaEnemigo : MonoBehaviour
     public float vida;
     public float puntos;
 
-    void Start()
-    {
-        
-    }
+    public bonnyPool objectPooling;
 
-    void Update()
-    {
-        
-    }
     public void TomarDaño(float daño)
     {
         vida -= daño; // 2; 1 comparacion y 1 resta
@@ -33,20 +26,26 @@ public class VidaEnemigo : MonoBehaviour
         {
             collision.gameObject.GetComponent<VidaPlayer>().TomarDaño();
             vida -= 1;
-            DestroyEnemy();
+            //DestroyEnemy();
+
+            ValidatePool();
         }
 
         if (collision.gameObject.tag == "LimiteEnemy" || 
             collision.gameObject.tag == "Puas")
         {
-            DestroyEnemy();
+            //DestroyEnemy();
+
+            ValidatePool();
         }
     }
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.tag == "Dead")
         {
-            Destroy(gameObject);
+            //DestroyEnemy();
+
+            ValidatePool();
         }
     }
     void EnemyDead()
@@ -56,7 +55,9 @@ public class VidaEnemigo : MonoBehaviour
         AudioManager.instancia.SonidoExplosion(); // 1
         GameObject explotion = Instantiate(boomPrefab, transform.position, transform.rotation); //4 asignacion 
         Destroy(explotion, 1f); // 2 asignacion
-        Destroy(gameObject); // 1 asignacion
+                                //DestroyEnemy();
+
+        ValidatePool();
     } // 2+8+4+1+2+1 = 18
     //Tiempo asintotico O(1) es constante 
 
@@ -64,6 +65,15 @@ public class VidaEnemigo : MonoBehaviour
     {
         GameObject explotion = Instantiate(boomPrefab, transform.position, transform.rotation); // -> 1 + 3 
         Destroy(explotion, 1f); // -> 2
-        Destroy(gameObject); // -> 1
+                                //DestroyEnemy();
+
+        ValidatePool();
     } //// -> 1 + 3 + 2 + 1 = 7
+
+    private void ValidatePool()
+    {
+        if (objectPooling == null) return;
+
+        objectPooling.devolverEnemy(this.gameObject);
+    }
 }
