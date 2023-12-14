@@ -5,93 +5,31 @@ using UnityEngine.UI;
 
 public class StoreController : MonoBehaviour
 {
-    public List<BulletSO> bulletSO;
-
-    //[Header("CircularDoubleLinkedList")]
-
-    //public Sprite[] bulletArray;
+    public BulletSO[] bulletSO;
     public Image[] currentImage;
-    //CircularDoubleLinkedList<int> circularDoubleLinkedList;
-
-    //[Header("Hashtable")]
-    //public Bullet[] bullet;
-    ////Hashtable<Bullet> hashtable;
-
-    public int currentIndex = 0;
-    //public int[] arrayIndex;
-
-    [Header("Sliders")]
     public Slider[] slider;
-
-    void Awake()
+    public Button[] button;
+    private int currentIndex = 0;
+    private int[] arrayIndex;
+    private void Awake()
     {
-        //circularDoubleLinkedList = new CircularDoubleLinkedList<int>();
-        //hashtable = new Hashtable<Bullet>();
+        arrayIndex = new int[bulletSO.Length];
     }
     void Start()
     {
         currentIndex = 0;
+        UpdateIndexArray();
         CurrentImage();
         SliderValue();
     }
-
-    void BubbleSortEnchanced(int[] array)
-    {
-        int tmp;
-        bool isOrder;
-        for (int i = 0; i < array.Length - 1; ++i)
-        {
-            isOrder = true;
-            for (int j = 0; j < array.Length - i - 1; ++j)
-            {
-                if (bulletSO[j].damage < bulletSO[j + 1].damage)
-                {
-                    tmp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = tmp;
-                    isOrder = false;
-                }
-            }
-
-            if (isOrder == true)
-            {
-                break;
-            }
-        }
-    }
-
-    void SelectionSortEnchanced(int[] array)
-    {
-        int tmp;
-        int mindId;
-        for (int i = 0; i < array.Length - 1; ++i)
-        {
-            mindId = i;
-            for (int j = i + 1; j < array.Length; ++j)
-            {
-                if (bulletSO[mindId].range < bulletSO[j].range)
-                {
-                    mindId = j;
-                }
-            }
-
-            if (mindId != i)
-            {
-                tmp = array[i];
-                array[i] = array[mindId];
-                array[mindId] = tmp;
-            }
-        }
-    }
-    void InsertionSort(int[] array)
+    private void InsertionSort(int[] array, string name)
     {
         int tmp;
         for (int i = 1; i < array.Length; ++i)
         {
             tmp = array[i];
             int j = i - 1;
-
-            while (j >= 0 && bulletSO[j].speed < bulletSO[tmp].speed)
+            while (j >= 0 && Compare(bulletSO[j], bulletSO[tmp], name))
             {
                 array[j + 1] = array[j];
                 j = j - 1;
@@ -99,22 +37,24 @@ public class StoreController : MonoBehaviour
             array[j + 1] = tmp;
         }
     }
-
-    void InsertionSortMunicion(int[] array)
+    private bool Compare(BulletSO a, BulletSO b, string name)
     {
-        int tmp;
-        for (int i = 1; i < array.Length; ++i)
+        switch (name)
         {
-            tmp = array[i];
-            int j = i - 1;
-
-            while (j >= 0 && bulletSO[j].municion < bulletSO[tmp].municion)
-            {
-                array[j + 1] = array[j];
-                j = j - 1;
-            }
-            array[j + 1] = tmp;
+            case "Daño":
+                return a.damage < b.damage;
+            case "Rango":
+                return a.range < b.range;
+            case "Velocidad":
+                return a.speed < b.speed;
+            default:
+                return a.municion < b.municion;
         }
+    }
+    public void UpdateIndexArray()
+    {
+        for (int i = 0; i < bulletSO.Length; i++)
+            arrayIndex[i] = i;
     }
     public void SliderValue()
     {
@@ -123,59 +63,42 @@ public class StoreController : MonoBehaviour
         slider[2].value = bulletSO[currentIndex].speed;
         slider[3].value = bulletSO[currentIndex].municion;
     }
-    public void CurrentImage()
+    private void CurrentImage()
     {
         currentImage[0].sprite = bulletSO[currentIndex].municionSprite;
-        //currentImage[1].sprite = hashtable.GetKey(circularDoubleLinkedList.PrintPreviousNode(currentIndex)).municionSprite;
-        //currentImage[2].sprite = hashtable.GetKey(circularDoubleLinkedList.PrintNextNode(currentIndex)).municionSprite;
+        currentImage[1].sprite = GetBulletIndex(currentIndex - 1);
+        currentImage[2].sprite = GetBulletIndex(currentIndex + 1);
+    }
+
+    private Sprite GetBulletIndex(int index)
+    {
+        if (index < 0) return bulletSO[3].municionSprite;
+        else if (index > 3) return bulletSO[0].municionSprite;
+        else return bulletSO[index].municionSprite;
     }
     public void PreviousBullet()
     {
-        currentIndex--;
-
-        if (currentIndex < 0)
-            currentIndex = 3;
-
+        currentIndex = currentIndex != 0 ? currentIndex-1 : 3;
         CurrentImage();
         SliderValue();
-        //Debug.Log("Anterior");
     }
     public void NextBullet()
     {
-        currentIndex++;
-
-        if (currentIndex > 3)
-            currentIndex = 0;
-
+        currentIndex = currentIndex != 3 ? currentIndex+1 : 0;
         CurrentImage();
         SliderValue();
-        //Debug.Log("Siguiente");
     }
-    //public void SortedCircularList(string name)
-    //{
-    //    if (name == "Daño")
-    //    {
-    //        BubbleSortEnchanced(arrayIndex);
-    //    }
-    //    if (name == "Rango")
-    //    {
-    //        SelectionSortEnchanced(arrayIndex);
-    //    }
-    //    if (name == "Velocidad")
-    //    {
-    //        InsertionSort(arrayIndex);
-    //    }
-    //    if (name == "Municion")
-    //    {
-    //        InsertionSortMunicion(arrayIndex);
-    //    }
-
-    //    for (int i = 0; i < arrayIndex.Length; ++i)
-    //    {
-    //        circularDoubleLinkedList.ModifyAtPosition(arrayIndex[i], i);
-    //    }
-    //    currentIndex = circularDoubleLinkedList.GetNodeValueAtStart();
-    //    CurrentImage();
-    //    SliderValue();
-    //}
+    public void SortedArray(string name)
+    {
+        InsertionSort(arrayIndex, name);
+        for (int i = 1; i < arrayIndex.Length; ++i)
+        {
+            BulletSO tmp = bulletSO[i - 1];
+            bulletSO[i - 1] = bulletSO[i];
+            bulletSO[i] = tmp;
+        }
+        currentIndex = 0;
+        CurrentImage();
+        SliderValue();
+    }
 }

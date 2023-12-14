@@ -14,13 +14,9 @@ public class AudioManager : MonoBehaviour
     void Awake()
     {
         if (instancia == null)
-        {
             instancia = this;
-        }
         else if (instancia != this)
-        {
             Destroy(gameObject);
-        }
     }
     void Start()
     {

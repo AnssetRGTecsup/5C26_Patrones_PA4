@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 302b90c755abc9e4888e4b85c7e66c50, type: 3}
   m_Name: Bullet
   m_EditorClassIdentifier: 
-  index: 0
-  bala: {fileID: 21300000, guid: 6415d4ae5e51e6846a22ad7f2420f044, type: 3}
+  municionSprite: {fileID: 21300000, guid: 113a2b5f6d92651468bdf8acd986069c, type: 3}
   damage: 1
   range: 1
   speed: 6
+  municion: 15
