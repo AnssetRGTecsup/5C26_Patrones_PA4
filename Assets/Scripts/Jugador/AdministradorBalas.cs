@@ -11,7 +11,8 @@ public class AdministradorBalas : MonoBehaviour
 
     [Header("DoubleLinkedList")]
     public Bullet[] bulletArray;
-    public DoubleLinkedList<Bullet> doubleLinkedList;
+    //public DoubleLinkedList<Bullet> doubleLinkedList;
+    public List<Bullet> doubleLinkedList;
 
     public Bullet currentBullet;
 
@@ -27,6 +28,8 @@ public class AdministradorBalas : MonoBehaviour
     public Image currentMunicion;
     public TextMeshProUGUI currenttMunicionText;
 
+    private int _listSize = 0;
+    private int _currrentPos = 0;
 
     void Awake()
     {
@@ -39,24 +42,27 @@ public class AdministradorBalas : MonoBehaviour
             Destroy(gameObject);
         }
 
-        doubleLinkedList = new DoubleLinkedList<Bullet>();
+        doubleLinkedList = new List<Bullet>();
     }
     void Start()
     {
-        doubleLinkedList.AddNodeAtStart(bulletArray[0]);
+        //doubleLinkedList.AddNodeAtStart(bulletArray[0]);
+        doubleLinkedList.Add(bulletArray[0]);
 
         for (int i = 1; i < bulletArray.Length; ++i)
         {
-            doubleLinkedList.AddNodeAtEnd(bulletArray[i]);
+            doubleLinkedList.Add(bulletArray[i]);
         }
 
-        for (int i = 0; i < bulletArray.Length; ++i)
+        /*for (int i = 0; i < bulletArray.Length; ++i)
         {
             doubleLinkedList.GetNodeValueAtPosition(i).currentMunicion = doubleLinkedList.GetNodeValueAtPosition(i).municion;
-        }
+        }*/
 
-        currentBullet = doubleLinkedList.GetNodeValueAtStart();
+        currentBullet = doubleLinkedList[0];
         CurrentImage();
+
+        _listSize = doubleLinkedList.Count;
         //doubleLinkedList.PrintAllNodes();
     }
     void Update()
@@ -93,12 +99,25 @@ public class AdministradorBalas : MonoBehaviour
     }
     public void PreviousBullet()
     {
-        currentBullet = doubleLinkedList.PrintPreviousNode(currentBullet);
+        _currrentPos = (_currrentPos - 1) == -1 ? _listSize - 1 : _currrentPos - 1;
+
+        /*if(_currrentPos -1 == -1)
+        {
+            _currrentPos = _listSize - 1;
+        }
+        else
+        {
+            _currrentPos = _currrentPos -1;
+        }*/
+
+        currentBullet = doubleLinkedList[_currrentPos];
         //Debug.Log("Anterior");
     }
     public void NextBullet()
     {
-        currentBullet = doubleLinkedList.PrintNextNode(currentBullet);
+        _currrentPos = ++_currrentPos % _listSize;
+        currentBullet = doubleLinkedList[_currrentPos];
+
         //Debug.Log("Siguiente");
     }
     private void Disparar()

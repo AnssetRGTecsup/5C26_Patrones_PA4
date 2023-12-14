@@ -6,10 +6,9 @@ public class PlayerMove : MonoBehaviour
 {
     public GameObject target;
 
-    public float velocidad;
-    public float direccion;
-    public float Fuerzasalto;
+    public PlayerSO Player;
     public Rigidbody2D rb;
+    public float direccion;
     private Animator animator;
     public AdministradorBalas disparo;
 
@@ -29,12 +28,12 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         direccion = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(direccion * velocidad, rb.velocity.y);
+        rb.velocity = new Vector2(direccion * Player.velocidad, rb.velocity.y);
         GroundRayCast();
 
         if (Input.GetButtonDown("Jump") && isGround == true)
         {
-            rb.AddForce(Vector2.up * Fuerzasalto, ForceMode2D.Impulse);
+            rb.AddForce(Vector2.up * Player.Fuerzasalto, ForceMode2D.Impulse);
         }
 
         AnimationControl();
